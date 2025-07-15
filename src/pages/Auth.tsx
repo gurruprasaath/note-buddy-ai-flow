@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -52,15 +51,15 @@ const Auth = () => {
   return (
     <div className="min-h-screen flex">
       {/* Left Column - Welcome Section (Hidden on mobile) */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-sky-500 to-purple-600 text-white flex-col justify-center items-center p-12 relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-sky-500 to-purple-600 dark:from-purple-800 dark:to-indigo-900 text-white flex-col justify-center items-center p-12 relative overflow-hidden transition-colors duration-300">
         {/* Background decoration */}
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="absolute top-20 left-20 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
-        <div className="absolute bottom-20 right-20 w-40 h-40 bg-white/10 rounded-full blur-xl"></div>
+        <div className="absolute inset-0 bg-black/10 dark:bg-black/20"></div>
+        <div className="absolute top-20 left-20 w-32 h-32 bg-white/10 dark:bg-white/5 rounded-full blur-xl"></div>
+        <div className="absolute bottom-20 right-20 w-40 h-40 bg-white/10 dark:bg-white/5 rounded-full blur-xl"></div>
         
         <div className="relative z-10 text-center max-w-md">
           <div className="flex justify-center mb-6">
-            <div className="p-4 bg-white/20 rounded-2xl backdrop-blur-sm">
+            <div className="p-4 bg-white/20 dark:bg-white/10 rounded-2xl backdrop-blur-sm">
               <BookOpen className="h-12 w-12 text-white" />
             </div>
           </div>
@@ -70,19 +69,19 @@ const Auth = () => {
           
           <div className="space-y-4 text-left">
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-white/20 rounded-lg">
+              <div className="p-2 bg-white/20 dark:bg-white/10 rounded-lg">
                 <MessageCircle className="h-5 w-5" />
               </div>
               <span>Chat with your books and notes</span>
             </div>
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-white/20 rounded-lg">
+              <div className="p-2 bg-white/20 dark:bg-white/10 rounded-lg">
                 <Map className="h-5 w-5" />
               </div>
               <span>Generate personalized study roadmaps</span>
             </div>
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-white/20 rounded-lg">
+              <div className="p-2 bg-white/20 dark:bg-white/10 rounded-lg">
                 <FileText className="h-5 w-5" />
               </div>
               <span>Summarize complex materials instantly</span>
@@ -92,21 +91,21 @@ const Auth = () => {
       </div>
 
       {/* Right Column - Auth Form */}
-      <div className="flex-1 lg:w-1/2 flex items-center justify-center p-6 lg:p-12 bg-gray-50">
+      <div className="flex-1 lg:w-1/2 flex items-center justify-center p-6 lg:p-12 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
         <div className="w-full max-w-md">
           {/* Mobile Logo */}
           <div className="lg:hidden text-center mb-8">
             <div className="flex justify-center mb-4">
-              <div className="p-3 bg-gradient-to-r from-sky-500 to-purple-500 rounded-xl">
+              <div className="p-3 bg-gradient-to-r from-sky-500 to-purple-500 dark:from-purple-600 dark:to-indigo-600 rounded-xl">
                 <BookOpen className="h-8 w-8 text-white" />
               </div>
             </div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-sky-600 to-purple-600 bg-clip-text text-transparent">
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-sky-600 to-purple-600 dark:from-purple-400 dark:to-indigo-400 bg-clip-text text-transparent">
               AI Notes Buddy
             </h1>
           </div>
 
-          <Card className="border-0 shadow-xl">
+          <Card className="border-0 shadow-xl dark:bg-gray-800 dark:shadow-2xl transition-colors duration-300">
             <CardHeader className="space-y-1 pb-6">
               <CardTitle className="text-2xl text-center">
                 {authMode === 'login' ? 'Sign in' : 'Create account'}
