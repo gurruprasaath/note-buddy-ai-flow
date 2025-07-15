@@ -9,6 +9,7 @@ import Chat from "./pages/Chat";
 import Roadmap from "./pages/Roadmap";
 import Summarize from "./pages/Summarize";
 import Profile from "./pages/Profile";
+import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
 
@@ -20,16 +21,21 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/chat" element={<Chat />} />
-            <Route path="/roadmap" element={<Roadmap />} />
-            <Route path="/summarize" element={<Summarize />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Layout>
+        <Routes>
+          <Route path="/auth" element={<Auth />} />
+          <Route path="*" element={
+            <Layout>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/chat" element={<Chat />} />
+                <Route path="/roadmap" element={<Roadmap />} />
+                <Route path="/summarize" element={<Summarize />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Layout>
+          } />
+        </Routes>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

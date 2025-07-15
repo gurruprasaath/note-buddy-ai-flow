@@ -1,11 +1,12 @@
 
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { BookOpen, Menu, X } from 'lucide-react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { BookOpen, Menu, X, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -14,6 +15,11 @@ const Navbar = () => {
     { name: 'Summarize', path: '/summarize' },
     { name: 'Profile', path: '/profile' },
   ];
+
+  const handleSignOut = () => {
+    // TODO: Implement sign out logic
+    navigate('/auth');
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-sky-100 shadow-sm">
@@ -46,6 +52,16 @@ const Navbar = () => {
                 {item.name}
               </NavLink>
             ))}
+            
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleSignOut}
+              className="flex items-center space-x-2"
+            >
+              <LogOut className="h-4 w-4" />
+              <span>Sign Out</span>
+            </Button>
           </div>
 
           {/* Mobile menu button */}
@@ -80,6 +96,17 @@ const Navbar = () => {
                   {item.name}
                 </NavLink>
               ))}
+              
+              <button
+                onClick={() => {
+                  handleSignOut();
+                  setIsMenuOpen(false);
+                }}
+                className="flex items-center space-x-2 w-full px-3 py-2 text-base font-medium text-gray-600 hover:text-sky-600 hover:bg-sky-50 rounded-md transition-colors"
+              >
+                <LogOut className="h-4 w-4" />
+                <span>Sign Out</span>
+              </button>
             </div>
           </div>
         )}
