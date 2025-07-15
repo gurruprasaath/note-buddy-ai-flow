@@ -52,29 +52,29 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen flex items-center justify-center px-4 py-6">
       <div className="w-full max-w-md">
-        {/* Logo and Welcome */}
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <div className="p-3 bg-gradient-to-r from-sky-500 to-purple-500 rounded-lg">
-              <BookOpen className="h-8 w-8 text-white" />
+        {/* Compact Logo and Welcome */}
+        <div className="text-center mb-6">
+          <div className="flex justify-center mb-3">
+            <div className="p-2 bg-gradient-to-r from-sky-500 to-purple-500 rounded-lg">
+              <BookOpen className="h-6 w-6 text-white" />
             </div>
           </div>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-sky-600 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="text-xl font-bold bg-gradient-to-r from-sky-600 to-purple-600 bg-clip-text text-transparent">
             AI Notes Buddy
           </h1>
-          <p className="text-muted-foreground mt-2">
+          <p className="text-muted-foreground text-sm mt-1">
             {authMode === 'login' ? 'Welcome back!' : 'Start your learning journey'}
           </p>
         </div>
 
         <Card>
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl text-center">
+          <CardHeader className="space-y-1 pb-4">
+            <CardTitle className="text-xl text-center">
               {authMode === 'login' ? 'Sign in' : 'Create account'}
             </CardTitle>
-            <CardDescription className="text-center">
+            <CardDescription className="text-center text-sm">
               {authMode === 'login' 
                 ? 'Enter your credentials to access your account' 
                 : 'Enter your information to create a new account'
@@ -83,97 +83,97 @@ const Auth = () => {
           </CardHeader>
           <CardContent>
             {authMode === 'login' ? (
-              <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+              <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-3">
+                <div className="space-y-1">
+                  <Label htmlFor="email" className="text-sm">Email</Label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Mail className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="email"
                       type="email"
                       placeholder="Enter your email"
-                      className="pl-10"
+                      className="pl-10 h-9"
                       {...loginForm.register('email', { required: 'Email is required' })}
                     />
                   </div>
                   {loginForm.formState.errors.email && (
-                    <p className="text-sm text-destructive">{loginForm.formState.errors.email.message}</p>
+                    <p className="text-xs text-destructive">{loginForm.formState.errors.email.message}</p>
                   )}
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
+                <div className="space-y-1">
+                  <Label htmlFor="password" className="text-sm">Password</Label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Lock className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
-                      className="pl-10 pr-10"
+                      className="pl-10 pr-10 h-9"
                       {...loginForm.register('password', { required: 'Password is required' })}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-3 text-muted-foreground hover:text-foreground"
+                      className="absolute right-3 top-2.5 text-muted-foreground hover:text-foreground"
                     >
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
                   </div>
                   {loginForm.formState.errors.password && (
-                    <p className="text-sm text-destructive">{loginForm.formState.errors.password.message}</p>
+                    <p className="text-xs text-destructive">{loginForm.formState.errors.password.message}</p>
                   )}
                 </div>
 
-                <Button type="submit" className="w-full" disabled={isLoading}>
+                <Button type="submit" className="w-full h-9" disabled={isLoading}>
                   {isLoading ? 'Signing in...' : 'Sign in'}
                 </Button>
               </form>
             ) : (
-              <form onSubmit={registerForm.handleSubmit(onRegisterSubmit)} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Full Name</Label>
+              <form onSubmit={registerForm.handleSubmit(onRegisterSubmit)} className="space-y-3">
+                <div className="space-y-1">
+                  <Label htmlFor="name" className="text-sm">Full Name</Label>
                   <div className="relative">
-                    <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <User className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="name"
                       type="text"
                       placeholder="Enter your full name"
-                      className="pl-10"
+                      className="pl-10 h-9"
                       {...registerForm.register('name', { required: 'Name is required' })}
                     />
                   </div>
                   {registerForm.formState.errors.name && (
-                    <p className="text-sm text-destructive">{registerForm.formState.errors.name.message}</p>
+                    <p className="text-xs text-destructive">{registerForm.formState.errors.name.message}</p>
                   )}
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="register-email">Email</Label>
+                <div className="space-y-1">
+                  <Label htmlFor="register-email" className="text-sm">Email</Label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Mail className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="register-email"
                       type="email"
                       placeholder="Enter your email"
-                      className="pl-10"
+                      className="pl-10 h-9"
                       {...registerForm.register('email', { required: 'Email is required' })}
                     />
                   </div>
                   {registerForm.formState.errors.email && (
-                    <p className="text-sm text-destructive">{registerForm.formState.errors.email.message}</p>
+                    <p className="text-xs text-destructive">{registerForm.formState.errors.email.message}</p>
                   )}
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="register-password">Password</Label>
+                <div className="space-y-1">
+                  <Label htmlFor="register-password" className="text-sm">Password</Label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Lock className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="register-password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Create a password"
-                      className="pl-10 pr-10"
+                      className="pl-10 pr-10 h-9"
                       {...registerForm.register('password', { 
                         required: 'Password is required',
                         minLength: { value: 6, message: 'Password must be at least 6 characters' }
@@ -182,46 +182,46 @@ const Auth = () => {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-3 text-muted-foreground hover:text-foreground"
+                      className="absolute right-3 top-2.5 text-muted-foreground hover:text-foreground"
                     >
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
                   </div>
                   {registerForm.formState.errors.password && (
-                    <p className="text-sm text-destructive">{registerForm.formState.errors.password.message}</p>
+                    <p className="text-xs text-destructive">{registerForm.formState.errors.password.message}</p>
                   )}
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="confirm-password">Confirm Password</Label>
+                <div className="space-y-1">
+                  <Label htmlFor="confirm-password" className="text-sm">Confirm Password</Label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Lock className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="confirm-password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Confirm your password"
-                      className="pl-10"
+                      className="pl-10 h-9"
                       {...registerForm.register('confirmPassword', { required: 'Please confirm your password' })}
                     />
                   </div>
                   {registerForm.formState.errors.confirmPassword && (
-                    <p className="text-sm text-destructive">{registerForm.formState.errors.confirmPassword.message}</p>
+                    <p className="text-xs text-destructive">{registerForm.formState.errors.confirmPassword.message}</p>
                   )}
                 </div>
 
-                <Button type="submit" className="w-full" disabled={isLoading}>
+                <Button type="submit" className="w-full h-9" disabled={isLoading}>
                   {isLoading ? 'Creating account...' : 'Create account'}
                 </Button>
               </form>
             )}
 
-            <div className="mt-6 text-center">
-              <p className="text-sm text-muted-foreground">
+            <div className="mt-4 text-center">
+              <p className="text-xs text-muted-foreground">
                 {authMode === 'login' ? "Don't have an account?" : "Already have an account?"}
                 <button
                   type="button"
                   onClick={() => setAuthMode(authMode === 'login' ? 'register' : 'login')}
-                  className="ml-1 text-primary hover:underline"
+                  className="ml-1 text-primary hover:underline text-xs"
                 >
                   {authMode === 'login' ? 'Sign up' : 'Sign in'}
                 </button>
