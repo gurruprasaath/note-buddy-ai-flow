@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { Send, Upload, File, Bot, User, Loader2 } from 'lucide-react';
+import { useFiles } from '@/contexts/FileProvider';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,6 +15,7 @@ interface Message {
 }
 
 const Chat = () => {
+  const { uploadedFiles, addFile } = useFiles();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -24,7 +26,6 @@ const Chat = () => {
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
   const handleSendMessage = async () => {
     if (!inputValue.trim()) return;
@@ -56,10 +57,10 @@ const Chat = () => {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      setUploadedFile(file);
+      addFile(file);
       const uploadMessage: Message = {
         id: Date.now().toString(),
-        content: `I've uploaded "${file.name}". Now I can answer questions about this document!`,
+        content: `I've uploaded "${file.name}". Now I can answer questions about this document! This file is now available across all features.`,
         sender: 'ai',
         timestamp: new Date(),
       };
@@ -112,17 +113,21 @@ const Chat = () => {
                 </label>
               </div>
               
-              {uploadedFile && (
-                <div className="flex items-center p-3 bg-sky-50 rounded-lg">
-                  <File className="h-5 w-5 text-sky-600 mr-2" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-sky-900 truncate">
-                      {uploadedFile.name}
-                    </p>
-                    <p className="text-xs text-sky-600">
-                      {(uploadedFile.size / 1024).toFixed(1)} KB
-                    </p>
-                  </div>
+              {uploadedFiles.length > 0 && (
+                <div className="space-y-2">
+                  {uploadedFiles.map((file, index) => (
+                    <div key={index} className="flex items-center p-3 bg-sky-50 rounded-lg">
+                      <File className="h-5 w-5 text-sky-600 mr-2" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-sky-900 truncate">
+                          {file.name}
+                        </p>
+                        <p className="text-xs text-sky-600">
+                          {(file.size / 1024).toFixed(1)} KB
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
             </CardContent>

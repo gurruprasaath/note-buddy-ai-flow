@@ -1,16 +1,18 @@
 
 import React, { useState } from 'react';
-import { FileText, Upload, Sparkles, Copy, Download, Loader2 } from 'lucide-react';
+import { FileText, Sparkles, Copy, Download, Loader2, AlertCircle } from 'lucide-react';
+import { useFiles } from '@/contexts/FileProvider';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 
 const Summarize = () => {
+  const { uploadedFiles, getFileContent } = useFiles();
   const [inputText, setInputText] = useState('');
   const [summary, setSummary] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<string>('');
   const { toast } = useToast();
 
   const generateSummary = async () => {
@@ -44,18 +46,14 @@ This AI-generated summary captures the essential information while making it eas
     }, 2500);
   };
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setUploadedFile(file);
-      // Simulate file content extraction
-      const sampleFileContent = `This is extracted content from ${file.name}. In a real implementation, this would extract and display the actual text content from PDF, DOC, or TXT files using appropriate libraries.`;
-      setInputText(sampleFileContent);
-      toast({
-        title: "File Uploaded",
-        description: `Successfully loaded content from ${file.name}`,
-      });
-    }
+  const handleFileSelect = (fileName: string) => {
+    setSelectedFile(fileName);
+    const content = getFileContent(fileName);
+    setInputText(content);
+    toast({
+      title: "File Selected",
+      description: `Loaded content from ${fileName}`,
+    });
   };
 
   const copyToClipboard = () => {
@@ -104,33 +102,38 @@ This AI-generated summary captures the essential information while making it eas
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="border-2 border-dashed border-sky-200 rounded-lg p-6 text-center hover:border-sky-300 transition-colors">
-                <input
-                  type="file"
-                  accept=".pdf,.doc,.docx,.txt"
-                  onChange={handleFileUpload}
-                  className="hidden"
-                  id="summarize-file-upload"
-                />
-                <label htmlFor="summarize-file-upload" className="cursor-pointer">
-                  <Upload className="h-8 w-8 text-sky-500 mx-auto mb-2" />
-                  <p className="text-sm text-gray-600">
-                    Upload PDF, DOC, or TXT files
+              {uploadedFiles.length > 0 ? (
+                <div className="space-y-2">
+                  <p className="text-sm text-gray-600 mb-3">Select a file uploaded in Chat:</p>
+                  {uploadedFiles.map((file, index) => (
+                    <div 
+                      key={index} 
+                      className={`flex items-center p-3 rounded-lg cursor-pointer border-2 transition-colors ${
+                        selectedFile === file.name 
+                          ? 'bg-sky-100 border-sky-300' 
+                          : 'bg-gray-50 border-gray-200 hover:border-sky-200'
+                      }`}
+                      onClick={() => handleFileSelect(file.name)}
+                    >
+                      <FileText className="h-5 w-5 text-sky-600 mr-2" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900 truncate">
+                          {file.name}
+                        </p>
+                        <p className="text-xs text-gray-600">
+                          {(file.size / 1024).toFixed(1)} KB
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="border-2 border-dashed border-gray-200 rounded-lg p-6 text-center">
+                  <AlertCircle className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                  <p className="text-sm text-gray-600 mb-2">No files available</p>
+                  <p className="text-xs text-gray-500">
+                    Go to the Chat page to upload files first
                   </p>
-                </label>
-              </div>
-
-              {uploadedFile && (
-                <div className="flex items-center p-3 bg-sky-50 rounded-lg">
-                  <FileText className="h-5 w-5 text-sky-600 mr-2" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-sky-900 truncate">
-                      {uploadedFile.name}
-                    </p>
-                    <p className="text-xs text-sky-600">
-                      {(uploadedFile.size / 1024).toFixed(1)} KB
-                    </p>
-                  </div>
                 </div>
               )}
 
