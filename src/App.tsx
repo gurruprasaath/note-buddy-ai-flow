@@ -10,6 +10,13 @@ import Index from "./pages/Index";
 import Chat from "./pages/Chat";
 import Roadmap from "./pages/Roadmap";
 import Summarize from "./pages/Summarize";
+import TestGenerator from "./pages/TestGenerator";
+import TestResults from "./pages/TestResults";
+import Resources from "./pages/Resources";
+import StudyPlan from "./pages/StudyPlan";
+import PomodoroTimer from "./pages/PomodoroTimer";
+import EduTube from "./pages/EduTube";
+import CodingPractice from "./pages/CodingPractice";
 import Profile from "./pages/Profile";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
@@ -34,6 +41,13 @@ const App = () => (
                   <Route path="/chat" element={<Chat />} />
                   <Route path="/roadmap" element={<Roadmap />} />
                   <Route path="/summarize" element={<Summarize />} />
+                  <Route path="/test-generator" element={<TestGenerator />} />
+                  <Route path="/test-results" element={<TestResults />} />
+                  <Route path="/resources" element={<Resources />} />
+                  <Route path="/study-plan" element={<StudyPlan />} />
+                  <Route path="/pomodoro" element={<PomodoroTimer />} />
+                  <Route path="/edutube" element={<EduTube />} />
+                  <Route path="/coding-practice" element={<CodingPractice />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>

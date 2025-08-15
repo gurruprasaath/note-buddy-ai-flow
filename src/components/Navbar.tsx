@@ -13,6 +13,13 @@ const Navbar = () => {
     { name: 'Chat', path: '/chat' },
     { name: 'Roadmap', path: '/roadmap' },
     { name: 'Summarize', path: '/summarize' },
+    { name: '🧪 Test Generator', path: '/test-generator' },
+    { name: 'Test Results', path: '/test-results' },
+    { name: 'Resources', path: '/resources' },
+    { name: '🗓️ Study Plan', path: '/study-plan' },
+    { name: '⏲️ Pomodoro Timer', path: '/pomodoro' },
+    { name: '🎥 EduTube', path: '/edutube' },
+    { name: 'Coding Practice', path: '/coding-practice' },
     { name: 'Profile', path: '/profile' },
   ];
 
