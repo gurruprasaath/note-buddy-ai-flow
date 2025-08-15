@@ -9,17 +9,16 @@ import { useToast } from '@/hooks/use-toast';
 
 const Summarize = () => {
   const { uploadedFiles, getFileContent } = useFiles();
-  const [inputText, setInputText] = useState('');
   const [summary, setSummary] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [selectedFile, setSelectedFile] = useState<string>('');
   const { toast } = useToast();
 
   const generateSummary = async () => {
-    if (!inputText.trim()) {
+    if (!selectedFile) {
       toast({
-        title: "Input Required",
-        description: "Please enter some text to summarize.",
+        title: "File Required",
+        description: "Please select a file to summarize.",
         variant: "destructive",
       });
       return;
@@ -29,15 +28,16 @@ const Summarize = () => {
     
     // Simulate API call
     setTimeout(() => {
-      const sampleSummary = `Here's a concise summary of your text:
+      const fileContent = getFileContent(selectedFile);
+      const sampleSummary = `Here's a concise summary of ${selectedFile}:
 
 Key Points:
-• ${inputText.split(' ').slice(0, 5).join(' ')}... represents the main concept
+• ${fileContent.split(' ').slice(0, 5).join(' ')}... represents the main concept
 • Important themes and ideas have been identified and condensed
 • Critical information has been preserved while removing redundant details
 • The core message remains intact in this shortened format
 
-Summary Length: ${Math.floor(inputText.length * 0.3)} characters (reduced from ${inputText.length} characters)
+Summary Length: ${Math.floor(fileContent.length * 0.3)} characters (reduced from ${fileContent.length} characters)
 
 This AI-generated summary captures the essential information while making it easier to review and understand. In a real implementation, this would use the Groq API for more accurate and contextual summarization.`;
 
@@ -48,11 +48,9 @@ This AI-generated summary captures the essential information while making it eas
 
   const handleFileSelect = (fileName: string) => {
     setSelectedFile(fileName);
-    const content = getFileContent(fileName);
-    setInputText(content);
     toast({
       title: "File Selected",
-      description: `Loaded content from ${fileName}`,
+      description: `Selected ${fileName} for summarization`,
     });
   };
 
@@ -91,14 +89,14 @@ This AI-generated summary captures the essential information while making it eas
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Input Section */}
-        <div className="space-y-6">
-          <Card>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* File Selection Section */}
+        <div className="lg:col-span-1">
+          <Card className="h-full">
             <CardHeader>
               <CardTitle className="flex items-center">
                 <FileText className="h-5 w-5 mr-2" />
-                Input Text
+                Select File to Summarize
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -136,22 +134,9 @@ This AI-generated summary captures the essential information while making it eas
                   </p>
                 </div>
               )}
-
-              <div className="relative">
-                <div className="absolute top-2 right-2 bg-sky-50 px-2 py-1 rounded text-xs text-sky-600">
-                  {inputText.length} characters
-                </div>
-                <Textarea
-                  value={inputText}
-                  onChange={(e) => setInputText(e.target.value)}
-                  placeholder="Paste your notes or text here to get a concise summary..."
-                  className="min-h-[300px] resize-none pr-20"
-                />
-              </div>
-
               <Button
                 onClick={generateSummary}
-                disabled={!inputText.trim() || isGenerating}
+                disabled={!selectedFile || isGenerating}
                 className="w-full bg-gradient-to-r from-sky-500 to-purple-500 hover:from-sky-600 hover:to-purple-600"
                 size="lg"
               >
@@ -172,7 +157,7 @@ This AI-generated summary captures the essential information while making it eas
         </div>
 
         {/* Output Section */}
-        <div>
+        <div className="lg:col-span-2">
           <Card className="h-full">
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
